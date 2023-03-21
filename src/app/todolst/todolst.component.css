@@ -1,0 +1,31 @@
+.done {
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.list-group {
+  display: flex;
+margin: auto;
+  cursor: pointer;
+}
+
+.list-group-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2em;
+}
+
+.focused{
+  background-color: rgba(96, 28, 160, 0.813);
+  color: #fff;
+  font-weight: 700;
+}
+
+.todo-text{
+  width: 20em;
+}
+
+.todo-btns{
+  
+}
