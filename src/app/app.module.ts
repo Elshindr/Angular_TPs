@@ -7,11 +7,12 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 
-import { AppComponent } from '../app/root/app.component';
-import { MainComponent } from '../app/main/main.component';
-import { HeaderComponent } from '../app/header/header.component';
-import { NavComponent } from '../app/nav/nav.component';
-import { TodoLstComponent } from '../app/todolst/todolst.component';
+import { AppComponent } from './components/root/app.component';
+import { MainComponent } from './components/main/main.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NavComponent } from './components/nav/nav.component';
+import { TodoLstComponent } from './components/todolst/todolst.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TodoLstComponent } from '../app/todolst/todolst.component';
     MainComponent,
     HeaderComponent,
     NavComponent,
-    TodoLstComponent
+    TodoLstComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

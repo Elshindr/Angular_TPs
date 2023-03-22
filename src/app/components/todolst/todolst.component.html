@@ -1,9 +1,9 @@
-<h2 class="my-3 text-center">{{title}}</h2>
+<h2 class="my-3 text-center">{{title}} {{nbTodos |number:'1.1-5'}}</h2>
 
 <ul class="list-group col-5">
   <li #liTag
       class="list-group-item" [id]="'todolst-' + i" 
-      (click) = "changeDone(i)"
+      (click) = "changeDone(elm)"
       [class.done]  = "elm.done"
 
       (mouseenter) = "liTag.classList.add('focused')"
