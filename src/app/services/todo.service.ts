@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../models/todo';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,27 +8,41 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TodoService {
 
-  public todos$ = new BehaviorSubject([    
-    new Todo("Faire la vaiselle"),
-    new Todo("Faire une todolist sur angular"),
-    new Todo("Rendre la todo list interactive?"),
-    new Todo("Faire chauffer l'eau pour un futur café"),
-    new Todo("Racheter du café"),
-    new Todo("Manger")
-  ]);
+  public todos$ = new BehaviorSubject<Todo[]>([]);
 
+  constructor(private _http: HttpClient) {
+    this.findAll();
+  }
 
-  constructor() {
+  public findAll() {
+    this._http
+      .get<Todo[]>('http://localhost:3000/todos')
+      .subscribe(todosFromApi => {
+        this.todos$.next(todosFromApi);
+      });
+  }
 
-    const sub = this.todos$.subscribe(() => console.log("sub"));
+  public addOne(data:Todo){
+    let newTodo = {text:data.text, done:data.done==true?true:false, id:0}
+  
+    this._http.post<Todo>('http://localhost:3000/todos', newTodo)
+    .subscribe(todosFromApi => {
+      this.todos$.next([todosFromApi, ...this.todos$.value]);
+    });
+    
+  }
 
-    setTimeout(() => {
-      this.todos$.next([new Todo("Démarrer le programme! o/"), ...this.todos$.value]);
-    }, 2000);
+  public removeOne(i:number, todo:Todo){
+    this.todos$.value.splice(i, 1);
+    this._http.delete<Todo>('http://localhost:3000/todos/' + todo.id)
+    .subscribe(todosFromApi => {
+      this.todos$.next([...this.todos$.value]);
+    });
+  }
 
-    setTimeout(() => {
-      console.log("unsub")
-      sub.unsubscribe();
-    }, 15000);
+  public updateOne(todo:Todo){
+    this._http.put<Todo>('http://localhost:3000/todos/'+todo.id, todo).subscribe(update => {
+      const updTodo =  this.todos$.value.find(updTodo => updTodo.id == todo.id);
+    })
   }
 }

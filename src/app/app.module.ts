@@ -13,6 +13,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 import { TodoLstComponent } from './components/todolst/todolst.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FormTodoComponent } from './components/form-todo/form-todo.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,14 +23,16 @@ import { FooterComponent } from './components/footer/footer.component';
     HeaderComponent,
     NavComponent,
     TodoLstComponent,
-    FooterComponent
+    FooterComponent,
+    FormTodoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

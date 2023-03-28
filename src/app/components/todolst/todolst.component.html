@@ -1,27 +1,20 @@
-<h2 class="my-3 text-center">{{title}} {{nbTodos |number:'1.1-5'}}</h2>
+<h2 class="my-3 text-center">{{title}} {{nbTodos | number:'1.1-5'}}</h2>
 
 <ul class="list-group col-5">
-  <li #liTag
-      class="list-group-item" [id]="'todolst-' + i" 
-      (click) = "changeDone(elm)"
-      [class.done]  = "elm.done"
-
-      (mouseenter) = "liTag.classList.add('focused')"
-      (mouseout) = "liTag.classList.remove('focused')"
+  <li #liTag class="list-group-item" [id]="'todolst-' + elm.id" (click) = "changeDone(elm)" [class.done]  = "elm.done"
+      (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')"
       *ngFor="let elm of myArray; index as i">
-        <div 
-          (mouseenter) = "liTag.classList.add('focused')"
-          (mouseout) = "liTag.classList.remove('focused')"
-          class="todo-text">{{elm.text}} 
+
+        <div (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')" class="todo-text">
+          {{elm.text}} 
         </div>
-        <div 
-          (mouseenter) = "liTag.classList.add('focused')"
-          (mouseout) = "liTag.classList.remove('focused')"
-          class="todo-btns">
-            <button class="btn btn-danger btn-sm"(click)="removeElmtTodoLst(i)">-</button>
+        <div (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')" class="todo-btns">
+          <form (ngSubmit)="onRemove(i, elm)" >
+            <button class="btn btn-danger btn-sm" type="submit">-</button>
+          </form>
         </div>
+
   </li>
 </ul>
 
-<input id="addElmt" type="text" [(ngModel)]="newVal">
-<button class="btn btn-primary" (click)="addElmtTodoLst()">Ajouter</button>
+<app-todoform></app-todoform>
