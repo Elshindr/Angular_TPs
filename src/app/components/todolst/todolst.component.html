@@ -1,20 +1,17 @@
-<h2 class="my-3 text-center">{{title}} {{nbTodos | number:'1.1-5'}}</h2>
+<h2 class="my-3 text-center">{{nbTodos}}</h2>
 
-<ul class="list-group col-5">
-  <li #liTag class="list-group-item" [id]="'todolst-' + elm.id" (click) = "changeDone(elm)" [class.done]  = "elm.done"
-      (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')"
+<ul class="list-group">
+  <li #liTag class="list-group-item" [id]="'todolst-' + elm.id" 
+  (mouseenter)="addFocusStyle(liTag)"
+      (mouseout)="liTag.classList.remove('focused')" 
       *ngFor="let elm of myArray; index as i">
 
-        <div (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')" class="todo-text">
+        <span  (click)="changeDone(elm)" [class.done]="elm.done" (mouseenter)="addFocusStyle(liTag)" class="todo-text">
           {{elm.text}} 
-        </div>
-        <div (mouseenter) = "liTag.classList.add('focused')" (mouseout) = "liTag.classList.remove('focused')" class="todo-btns">
-          <form (ngSubmit)="onRemove(i, elm)" >
-            <button class="btn btn-danger btn-sm" type="submit">-</button>
-          </form>
-        </div>
+        </span>
+        <button class="btn btn-primary btn-sm btns" (click)="showDetails(i, elm)" (mouseenter)="addFocusStyle(liTag)"> See</button>
 
   </li>
 </ul>
 
-<app-todoform></app-todoform>
+

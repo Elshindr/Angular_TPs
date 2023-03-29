@@ -1,0 +1,13 @@
+#main{
+  display : flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#lst{
+  width: 30em;
+}
+
+#detail{
+  width: 20em;
+}

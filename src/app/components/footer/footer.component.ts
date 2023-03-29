@@ -11,16 +11,12 @@ import { Todo } from 'src/app/models/todo';
     <div *ngFor="let todo of todos$ |async">{{ todo.text }}</div>
   </footer>
   `,
-  styles: [
-  ]
+  styles: []
 })
 export class FooterComponent{
   todos: Todo[] = [];
   todos$ = this._todoService.todos$;
 
   constructor(private _todoService:TodoService){
-
   }
-
-
 }

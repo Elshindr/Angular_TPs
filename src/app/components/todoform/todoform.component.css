@@ -1,0 +1,20 @@
+*{
+  margin-top:1em;
+  margin-left: 0.4em;
+}
+
+.card-header{
+  font-weight: 700;
+  margin:0;
+  text-align: center;
+}
+
+.form-label{
+  width: 5em;
+  font-weight: 600;
+}
+
+
+.btn{
+  width:100%;
+}

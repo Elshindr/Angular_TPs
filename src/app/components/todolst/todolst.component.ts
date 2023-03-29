@@ -1,4 +1,3 @@
-import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Todo } from "src/app/models/todo";
@@ -11,18 +10,14 @@ import {TodoService} from "src/app/services/todo.service";
 })
 
 export class TodoLstComponent implements OnInit, OnDestroy{
-  title = "Ma liste des taches";
   myArray: Todo[] = [];
   nbTodos:number = 0;
 
+  src
   private _sub! : Subscription;
   
 
   constructor(private _todoService: TodoService) {
-  }
-
-  onRemove(i:number, todo:Todo){
-      this._todoService.removeOne(i, todo);
   }
 
   changeDone(todo:Todo){
@@ -30,6 +25,15 @@ export class TodoLstComponent implements OnInit, OnDestroy{
     this._todoService.updateOne(todo);
   }
 
+  showDetails(i:number, todo:Todo){
+    this._todoService.detailOne(todo);
+  }
+
+  addFocusStyle(tag){
+    tag.classList.add('focused');
+  }
+  
+  
   ngOnInit(){
     this._sub = this._todoService.todos$.subscribe(
         todosDatas => {
