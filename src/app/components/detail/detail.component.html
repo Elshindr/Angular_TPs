@@ -1,0 +1,15 @@
+<div class="card">
+  <img class="card-img-top" [src]="movie.img" alt="Movie image cap">
+  
+  <div class="card-body">
+    <h3 class="card-title">{{movie.titre}}</h3>
+    <p class="card-text">Description: {{movie.description}}</p>
+    <p class="card-text">Categorie: {{movie.categorie}}</p>
+  </div>
+  
+  <div class="card-footer">
+    <i (click)="onLike(movie)" class="bi bi-heart-fill">{{movie.nbJaimes}}</i> 
+  
+    <i *ngIf="!movie.favoris" (click)="onAddfav(movie)"class="bi bi-star"></i>
+    <i *ngIf="movie.favoris" (click)="onAddfav(movie)" class="bi bi-star-fill"></i>
+  </div>

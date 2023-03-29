@@ -1,0 +1,47 @@
+{
+  "movies": [
+    {
+      "id": 0,
+      "titre": "How I Wish Perfect Was Enough",
+      "description": " description test",
+      "categorie": "tv",
+      "nbJaimes": 17,
+      "favoris": false,
+      "img": "https://m.media-amazon.com/images/M/MV5BZmVhZWVmMWMtYmIzYi00MmZjLWJjOTYtNzYwMzExOTY0NmYxXkEyXkFqcGdeQXVyMTMwMjA3Njc1._V1_.jpg"
+    },
+    {
+      "id": 1,
+      "titre": "Cosmic Disaster",
+      "description": " description testbis",
+      "categorie": "tv",
+      "nbJaimes": 7,
+      "favoris": false,
+      "img": "https://m.media-amazon.com/images/M/MV5BZmVhZWVmMWMtYmIzYi00MmZjLWJjOTYtNzYwMzExOTY0NmYxXkEyXkFqcGdeQXVyMTMwMjA3Njc1._V1_.jpg"
+    },
+    {
+      "id": 3,
+      "titre": "Untitled Universal Event Film (2024)",
+      "description": " description TTT",
+      "categorie": "movie",
+      "nbJaimes": 3,
+      "favoris": true,
+      "img": "https://m.media-amazon.com/images/M/MV5BM2M0MmM3ZTctNmFlYi00Y2E2LWFkOWEtZGE0Mjc0NDk3NjIxXkEyXkFqcGdeQXVyMTUyNDE1NTA5._V1_.jpg"
+    },
+    {
+      "id": 2,
+      "titre": "Døde menn går på ski",
+      "description": " description t555",
+      "categorie": "ton autre categorie",
+      "nbJaimes": 7,
+      "favoris": true,
+      "img": "https://m.media-amazon.com/images/M/MV5BZjkwYjNkYWItMGMyOC00OTFjLTg2N2QtN2FmMjA5ZDNiMDBjXkEyXkFqcGdeQXVyNzQ0NDMwMTk@._V1_.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "nom": "",
+      "img": ""
+    }
+  ]
+}

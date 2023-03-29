@@ -1,0 +1,25 @@
+<link 
+href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+rel="stylesheet"  type='text/css'>
+
+<div class="listeMovies" *ngFor="let elm of lstMovies; index as i">
+  
+      <div [id]="'card'+elm.id" class="card">
+        <img class="card-img-top" [src]="elm.img" alt="Movie image cap">
+
+        <div class="card-body">
+          <h3 class="card-title">{{elm.titre}}</h3>
+          <p class="card-text">Description: {{elm.description}}</p>
+          <p class="card-text">Categorie: {{elm.categorie}}</p>
+        </div>
+
+        <div class="card-footer">
+          <i (click)="onLike(elm)"class="fa fa-solid fa-thumbs-up">{{elm.nbJaimes}}</i> 
+
+          <i *ngIf="!elm.favoris" (click)="onAddfav(elm)"class="bi bi-star"></i>
+          <i *ngIf="elm.favoris" (click)="onAddfav(elm)" class="bi bi-star-fill"></i>
+
+          <a [routerLink]="['/detail/', elm.id]" (click)="onSeeDetail(elm)" class="btn btn-primary bi bi-eye"></a>
+        </div>
+</div>
+<router-outlet></router-outlet>
