@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "admin",
+      "pwd": "test"
+    },
+    {
+      "name": "test",
+      "pwd": "test",
+      "_isLogged": false,
+      "id": 1
+    }
+  ],
+  "todos": [
+    {
+      "text": "Avoir des idées de todos",
+      "done": false,
+      "categorie": "bureau",
+      "selected": false,
+      "id": 2,
+      "idUser": 1
+    },
+    {
+      "text": "Faire la polenta",
+      "done": true,
+      "categorie": "maison",
+      "selected": false,
+      "id": 1,
+      "idUser": 1
+    },
+    {
+      "text": "se faire un chocolat",
+      "done": true,
+      "categorie": "pouette",
+      "selected": false,
+      "id": 3,
+      "idUser": 1
+    },
+    ,
+    {
+      "text": "Finir son projet angular",
+      "done": true,
+      "categorie": "Bureau",
+      "selected": false,
+      "id": 1,
+      "idUser": 2
+    }
+  ]
+}
