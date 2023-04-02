@@ -12,6 +12,7 @@ import { TodoService } from 'src/app/services/todo.service';
 export class TododetailComponent {
   public todo!:Todo;
   _sub!: Subscription;
+  _subRoute!:Subscription;
   onEdit = false;
   titleEdit = "";
   cateEdit = "";
@@ -67,9 +68,16 @@ export class TododetailComponent {
   }
 
   ngOnInit(){
-    const todoId = this._route.snapshot.paramMap.get('id');
-    console.log(todoId)
-    if(typeof(todoId) == "string"){
+    let userId = "";
+    let todoId = "";
+    this._subRoute = this._route.params.subscribe(params => {
+      console.log(params) ;
+      console.log("test:" +params['idUser']) ;
+      todoId = params['id'];
+      userId = params['idUser'];
+    });
+
+    if(todoId != ""){
       this._todoService.getOneById(parseInt(todoId));
       
       this._sub = this._todoService.todo$.subscribe(
@@ -84,6 +92,7 @@ export class TododetailComponent {
 
   ngOnDestroy(){
     this._sub.unsubscribe();
+    this._subRoute.unsubscribe();
   }
 }
 

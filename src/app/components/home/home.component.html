@@ -1,1 +1,2 @@
-<app-connexion></app-connexion>
+<app-connexion (outConnexionStatus)="outConnexionStatutReceiver($event)" *ngIf="!coStatut"></app-connexion>
+<app-profil *ngIf="coStatut" ></app-profil>

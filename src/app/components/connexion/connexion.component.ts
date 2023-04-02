@@ -1,5 +1,5 @@
 import { UserService } from './../../services/user.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user';
@@ -12,9 +12,12 @@ import { Router } from '@angular/router';
 })
 export class ConnexionComponent implements OnInit, OnDestroy {
   private _subCurUser !: Subscription;
-  action = 0;
+  action = 1;
   curUser !: User;
-  
+  lstUser !: User[];
+
+  @Output() outConnexionStatus = new EventEmitter();
+
   constructor(private _userService: UserService, private _router: Router) {
   }
 
@@ -34,7 +37,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
           next: (nwUser: User) => {
             setTimeout(() => {
             console.log("navigate :: userId = "+ nwUser.id)
-            console.log(this._userService.curUser$);
+            console.log(this._userService.lstUsers$);
             this._router.navigateByUrl('liste/' + nwUser.id);
             }, 2000);
           },
@@ -51,24 +54,27 @@ export class ConnexionComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           console.log("apres get one by name curUser");
           console.log(this.curUser);
+
+          this.curUser.logged = true;
           console.log("ertreteter");
-          this._subCurUser = this._userService.curUser$.subscribe(
-            user => {  
-              this.curUser = user;
-              this._router.navigateByUrl('liste/' + user.id);
-            }
-          );
+          this.outConnexionStatus.emit(true);
           
-        }, 5000);
+        }, 3000);
 
       }
     }
   }
 
   ngOnInit(): void {
-    this._subCurUser = this._userService.curUser$.subscribe(
-      user => {  
-        this.curUser = user;
+    this._subCurUser = this._userService.lstUsers$.subscribe(
+      lstUser => {  
+        console.log("=== init Connexion sub user")
+        this.lstUser = lstUser;
+        this.curUser = this.lstUser[0];
+        console.log("user");
+        console.log(lstUser);
+        console.log("this.curUser");
+        console.log(this.lstUser);
       }
     );
   }

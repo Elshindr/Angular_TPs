@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  
+  coStatut = false;
+
+  outConnexionStatutReceiver(connexionValue: boolean){
+    this.coStatut =connexionValue;
+  }
 }

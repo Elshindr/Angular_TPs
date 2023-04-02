@@ -16,7 +16,7 @@ export class TodoService {
 
 
   constructor(private _http: HttpClient, private _userService: UserService) {
-    this.getAllTodosByIdUser(this._userService.curUser$.value.id);
+    this.getAllTodosByIdUser(this._userService.lstUsers$.value[0].id);
   }
 
 
@@ -40,7 +40,7 @@ export class TodoService {
   }
 
   public getOneById(id: number) :void {
-    console.log("getONE todo");
+    console.log("== getOnebyid todo");
     this._http.get<Todo>(this._baseUrl + id).subscribe(oneTodo => {
       this.todo$.next(oneTodo)
     });
@@ -54,12 +54,11 @@ export class TodoService {
   }
 
   public updateOne(todo:Todo){
-    console.log("===Update Todo");
+    console.log("=== Update Todo");
 
     return this._http.put<Todo>(this._baseUrl + todo.id, todo).pipe(
-      tap(() => setTimeout(() => {
-        this.getAllTodosByIdUser(todo.idUser);
-      }, 500))
+      tap(() => 
+        this.getAllTodosByIdUser(todo.idUser))
     );
   }
 

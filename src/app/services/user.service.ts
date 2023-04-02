@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, first, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.development';
@@ -12,7 +12,7 @@ export class UserService {
   private _baseUrl = environment.urlApi+"/users/";
 
   public lstUsers$ = new BehaviorSubject<User[]>([]);
-  public curUser$  = new BehaviorSubject<User>(new User("", ""));
+  //public curUser$  = new BehaviorSubject<User>(new User("", ""));
 
   constructor(private _http:HttpClient) {
     this.getAll();
@@ -26,9 +26,8 @@ export class UserService {
   }
 
   public getOneById(id: number) {
-
-    this._http.get<User>(this._baseUrl + '/' + id).subscribe(user => {
-      this.curUser$.next(user);
+    this._http.get<User[]>(this._baseUrl + '/' + id).subscribe(lstUser => {
+      this.lstUsers$.next(lstUser);
     });
   }
 
@@ -36,8 +35,8 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('name', name);
     //params = params.append('pwd', pwd);
-    this._http.get<User>(this._baseUrl, { params: params }).subscribe(user => {
-      this.curUser$.next(user);
+    this._http.get<User[]>(this._baseUrl, { params: params }).pipe(first()).subscribe(user => {
+      this.lstUsers$.next(user);
     });
   }
 

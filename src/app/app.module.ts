@@ -15,6 +15,7 @@ import { TodoformComponent } from './components/todoform/todoform.component';
 import { TododetailComponent } from './components/tododetail/tododetail.component';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
+import { ProfilComponent } from './components/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserComponent } from './components/user/user.component';
     ConnexionComponent,
     TodoformComponent,
     TododetailComponent,
-    UserComponent
+    UserComponent,
+    ProfilComponent
   ],
   imports: [
     BrowserModule,

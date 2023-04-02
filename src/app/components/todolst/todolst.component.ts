@@ -22,19 +22,18 @@ export class TodolstComponent implements OnInit, OnDestroy {
   error:string = "";
   curUser!: User; 
 
-  private _sub!: Subscription;
+  private _subTodo!: Subscription;
   private _subUser!: Subscription;
+  private _subRoute!: Subscription;
 
   constructor(private _userService: UserService, private _todoService: TodoService, private _router: Router, private _route: ActivatedRoute) {
   }
 
 
- 
-
 
   onSelectCategorie(categorie: string) {
 
-    this._sub = this._todoService.lstTodos$.subscribe(
+    this._subTodo = this._todoService.lstTodos$.subscribe(
       todosDatas => {
         this.lstTodos = todosDatas;
       }
@@ -107,14 +106,22 @@ export class TodolstComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log("=== list init");
-    const idUser = this._route.snapshot.paramMap.get('idUser');
+    let idUser = "";
 
+    this._subRoute = this._route.params.subscribe(params => {
+      console.log(params) ;
+      idUser = params['idUser'];
+    });
+
+    
     this.curUser = new User("", "");
-    this.curUser.id = 1;
-    if(typeof(idUser) == "string"){
+    this.curUser.id = parseInt(idUser);
+
+    if(idUser != ""){
+      console.log(idUser);
       this._todoService.getAllTodosByIdUser(parseInt(idUser));
         
-      this._sub = this._todoService.lstTodos$.subscribe(
+      this._subTodo = this._todoService.lstTodos$.subscribe(
         todo => {
           this.lstTodos = todo;
           this.setLstsTodos();
@@ -122,13 +129,16 @@ export class TodolstComponent implements OnInit, OnDestroy {
         }
       );
 
-    }  else{
+    } 
+    
+    
+    /*else{
       this._subUser = this._userService.curUser$.subscribe(
         user => {
           this.curUser = user;
 
           setTimeout(() => {
-            this._sub = this._todoService.lstTodos$.subscribe(
+            this._subTodo = this._todoService.lstTodos$.subscribe(
               todos => {
                 this.lstTodos = todos;
                 this.setLstCategories();
@@ -138,13 +148,13 @@ export class TodolstComponent implements OnInit, OnDestroy {
           }, 2000);
         }
       );
-    }
+    }*/
     
 
     
   }
 
   ngOnDestroy() {
-    this._sub.unsubscribe();
+    this._subTodo.unsubscribe();
   }
 }
