@@ -15,7 +15,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
   action = 1;
   curUser !: User;
   lstUser !: User[];
-
+  error : string = "";
   @Output() outConnexionStatus = new EventEmitter();
 
   constructor(private _userService: UserService, private _router: Router) {
@@ -26,55 +26,42 @@ export class ConnexionComponent implements OnInit, OnDestroy {
   }
 
   onSubmitConnect(form: NgForm) {
-
+    console.log("=== onSubmit Connexion")
     if (form.valid) {
       const user = new User(form.value.nameInput, form.value.pwdInput);
 
       if (this.action == 0) {
-        console.log('Creer');
+        console.log('== Creer User');
 
         this._userService.addOne(user).subscribe({
-          next: (nwUser: User) => {
-            setTimeout(() => {
-            console.log("navigate :: userId = "+ nwUser.id)
-            console.log(this._userService.lstUsers$);
-            this._router.navigateByUrl('liste/' + nwUser.id);
-            }, 2000);
+          next: () => {
+              this._userService.getOneByName(user.name, user.pwd);
           },
           error: () => {
-            console.log("FAIL CREATION");
+            this.error = "FAIL CREATION USER";
+            console.log("FAIL CREATION USER");
           }
         });
 
       } else if (this.action == 1) {
-
         console.log('=== Se co');
-        this._userService.getOneByName(user.name);
-
-        setTimeout(() => {
-          console.log("apres get one by name curUser");
-          console.log(this.curUser);
-
-          this.curUser.logged = true;
-          console.log("ertreteter");
-          this.outConnexionStatus.emit(true);
-          
-        }, 3000);
-
+        this._userService.getOneByName(user.name, user.pwd);
       }
+
+      setTimeout(() => {
+        this.curUser.logged = true;
+        this._router.navigateByUrl('home/' + this.curUser.id);
+      }, 3000);
+
+     
     }
   }
 
   ngOnInit(): void {
-    this._subCurUser = this._userService.lstUsers$.subscribe(
-      lstUser => {  
-        console.log("=== init Connexion sub user")
-        this.lstUser = lstUser;
-        this.curUser = this.lstUser[0];
-        console.log("user");
-        console.log(lstUser);
-        console.log("this.curUser");
-        console.log(this.lstUser);
+    this._subCurUser = this._userService.user$.subscribe(
+      user => {  
+        console.log("=== init Connexion");
+        this.curUser = user;
       }
     );
   }

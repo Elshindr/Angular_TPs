@@ -5,12 +5,12 @@ import { TododetailComponent } from './components/tododetail/tododetail.componen
 import { TodolstComponent } from './components/todolst/todolst.component';
 
 const routes: Routes = [
+  { path: 'home/:idUser', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'liste/:idUser/:id', component: TododetailComponent },
   { path: 'liste/:idUser', component: TodolstComponent },
-
- // { path: '', redirectTo: 'home', pathMatch: 'full' },
-//  { path: '**', redirectTo: 'home'},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home'},
 ];
 
 

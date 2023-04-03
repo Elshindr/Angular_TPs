@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -9,35 +9,66 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnInit, OnDestroy {
   currUserId !: number;
   _subUser !: Subscription;
-  lstUser !: User[];
   currUser !: User;
-
-  constructor(private _userService : UserService, private _router: Router){
+  constructor(private _userService: UserService, private _router: Router) {
   }
 
-  onGoLstTodos(){
-    console.log("== onGolstTodos")
-    this._userService.lstUsers$.subscribe(lstUser =>{
-      this.currUserId = lstUser[0].id;
-    })
+  onGoHome() {
+    console.log("== onGoHome");
 
-    this._router.navigateByUrl('liste/' +  this.currUserId);
+    if(this.currUser == undefined){
+
+      console.log('curUser est undefined');
+
+    } else{
+      console.log('nest pas undefined');
+    }
+
+
+    if (this.currUser!= undefined && this.currUser.logged) {
+      console.log("KLK1 est CO");
+      console.log(this.currUser.name + "est connecté");
+      this._userService.user$.subscribe(user => {
+        this.currUserId = user.id;
+      })
+
+      this._router.navigateByUrl('home/' + this.currUser.id);
+    } else { 
+      console.log("PAS CO");
+      this._router.navigateByUrl('home');
+    }
+  }
+
+
+  onGoLstTodos() {
+
+    console.log("== onGolstTodos");
+
+    if (this.currUser!= undefined && this.currUser.logged) {
+      console.log(this.currUser.name + 'est CO == GO LIST/id');
+      this._userService.user$.subscribe(user => {
+        this.currUserId = user.id;
+      })
+
+      this._router.navigateByUrl('liste/' + this.currUser.id);
+    }else{
+      console.log('PAS CO == go HOME ');
+      this._router.navigateByUrl('home');
+    }
   }
 
   ngOnInit(): void {
-    this._userService.lstUsers$.subscribe(lstUser =>{
-      this.lstUser  = lstUser;
-      this.currUser = this.lstUser[0];
-    })
+    console.log("== init HEADER")
+    this._subUser = this._userService.user$.subscribe(user => {
+      setTimeout(() => {this.currUser = user}, 1000)
+    });
   }
 
 
   ngOnDestroy(): void {
     this._subUser.unsubscribe();
   }
-
-
 }

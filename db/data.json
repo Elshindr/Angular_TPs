@@ -9,23 +9,25 @@
       "name": "test",
       "pwd": "test",
       "id": 1
+    },
+    {
+      "name": "jojo",
+      "pwd": "aze",
+      "id": 3
+    },
+    {
+      "name": "rt",
+      "pwd": "rt",
+      "id": 4
     }
   ],
   "todos": [
     {
       "text": "Avoir des idées de todos",
-      "done": true,
+      "done": false,
       "categorie": "bureau",
       "selected": false,
       "id": 2,
-      "idUser": 1
-    },
-    {
-      "text": "Arranger ses betises",
-      "done": false,
-      "categorie": "Maison",
-      "selected": false,
-      "id": 1,
       "idUser": 1
     },
     {
@@ -59,6 +61,30 @@
       "idUser": 2,
       "selected": false,
       "id": 7
+    },
+    {
+      "text": "ajouter",
+      "done": false,
+      "categorie": "pouet",
+      "idUser": 1,
+      "selected": false,
+      "id": 8
+    },
+    {
+      "text": "gty",
+      "done": false,
+      "categorie": "rva",
+      "idUser": 4,
+      "selected": false,
+      "id": 9
+    },
+    {
+      "text": "er",
+      "done": true,
+      "categorie": "er",
+      "idUser": 1,
+      "selected": false,
+      "id": 10
     }
   ]
 }

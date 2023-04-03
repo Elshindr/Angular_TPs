@@ -16,16 +16,14 @@ export class TodoService {
 
 
   constructor(private _http: HttpClient, private _userService: UserService) {
-    this.getAllTodosByIdUser(this._userService.lstUsers$.value[0].id);
+    this.getAllTodosByIdUser(this._userService.user$.value.id);
   }
-
 
   public getAllAdmin() :void {
     this._http.get<Todo[]>(this._baseUrl).subscribe(allTodos => {
       this.lstTodos$.next(allTodos)
     });
   }
-
 
   public getAllTodosByIdUser(idUser: number) :void {
 
@@ -73,6 +71,15 @@ export class TodoService {
     )
   }
 
+  public removeAllByIdUser(idUser: number){
+    console.log("=== Remove allTodos");
+  
+    let params = new HttpParams();
+    params = params.append('idUser', idUser);
+
+    this._http.delete<Todo>(this._baseUrl, {params: params}).subscribe(() => 
+    this.lstTodos$.next([]));
+  }
 
   public getOne(id: number){
     return this._http.get(this._baseUrl + 'id').pipe();

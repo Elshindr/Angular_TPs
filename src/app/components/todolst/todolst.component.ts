@@ -17,18 +17,17 @@ export class TodolstComponent implements OnInit, OnDestroy {
   lstTodos: Todo[] = [];
   lstTodosDone: Todo[]=[];
   lstTodosCurr: Todo[]=[];
+  curUser!: User; 
 
   lstCategories: string[] = [];
   error:string = "";
-  curUser!: User; 
-
+  
   private _subTodo!: Subscription;
   private _subUser!: Subscription;
   private _subRoute!: Subscription;
 
   constructor(private _userService: UserService, private _todoService: TodoService, private _router: Router, private _route: ActivatedRoute) {
   }
-
 
 
   onSelectCategorie(categorie: string) {
@@ -84,7 +83,6 @@ export class TodolstComponent implements OnInit, OnDestroy {
       if(!this.lstCategories.includes(todo.categorie)){
         this.lstCategories.push(todo.categorie);
       }
-          
     });
   }
 
@@ -106,55 +104,44 @@ export class TodolstComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log("=== list init");
-    let idUser = "";
 
-    this._subRoute = this._route.params.subscribe(params => {
-      console.log(params) ;
-      idUser = params['idUser'];
+    this._subUser = this._userService.user$.subscribe(
+      user => {
+        this.curUser = user;
     });
-
-    
-    this.curUser = new User("", "");
-    this.curUser.id = parseInt(idUser);
-
-    if(idUser != ""){
-      console.log(idUser);
-      this._todoService.getAllTodosByIdUser(parseInt(idUser));
-        
+  
+    if(this.curUser.id != undefined){
       this._subTodo = this._todoService.lstTodos$.subscribe(
-        todo => {
-          this.lstTodos = todo;
-          this.setLstsTodos();
-          this.setLstCategories();
-        }
-      );
-
-    } 
-    
-    
-    /*else{
-      this._subUser = this._userService.curUser$.subscribe(
-        user => {
-          this.curUser = user;
-
+        todos => {
           setTimeout(() => {
-            this._subTodo = this._todoService.lstTodos$.subscribe(
-              todos => {
                 this.lstTodos = todos;
                 this.setLstCategories();
                 this.setLstsTodos();
-              }
-            )
-          }, 2000);
+              
+          }, 1000);
         }
       );
-    }*/
-    
+    } else{
+      console.log("fail chargement");
 
-    
+      this._todoService.getAllTodosByIdUser(this.curUser.id);
+
+      this._subTodo = this._todoService.lstTodos$.subscribe(
+        todos => {
+          setTimeout(() => {
+                this.lstTodos = todos;
+                this.setLstCategories();
+                this.setLstsTodos();
+              
+          }, 3000);
+        }
+      );
+    }
   }
 
   ngOnDestroy() {
     this._subTodo.unsubscribe();
+    this._subUser.unsubscribe();
+   // this._subRoute.unsubscribe();
   }
 }

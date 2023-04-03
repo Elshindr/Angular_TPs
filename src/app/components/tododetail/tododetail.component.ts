@@ -33,6 +33,7 @@ export class TododetailComponent {
 
   }
 
+  
   onChangeDone() {
     console.log(this.todo)
     this.todo.done = !this.todo.done;
@@ -45,6 +46,7 @@ export class TododetailComponent {
       }
     })
   }
+
 
   editTodo(titre:string, categorie:string) {
     this.onEdit = !this.onEdit;
@@ -67,6 +69,7 @@ export class TododetailComponent {
     }
   }
 
+
   ngOnInit(){
     let userId = "";
     let todoId = "";
@@ -74,7 +77,6 @@ export class TododetailComponent {
       console.log(params) ;
       console.log("test:" +params['idUser']) ;
       todoId = params['id'];
-      userId = params['idUser'];
     });
 
     if(todoId != ""){
@@ -89,6 +91,7 @@ export class TododetailComponent {
       console.log("g fail <3");
     }
   }
+
 
   ngOnDestroy(){
     this._sub.unsubscribe();

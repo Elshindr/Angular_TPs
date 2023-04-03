@@ -1,2 +1,2 @@
-<app-connexion (outConnexionStatus)="outConnexionStatutReceiver($event)" *ngIf="!coStatut"></app-connexion>
-<app-profil *ngIf="coStatut" ></app-profil>
+<app-connexion *ngIf="isLogged() == false" ></app-connexion>
+<app-profil *ngIf="isLogged() == true"></app-profil>

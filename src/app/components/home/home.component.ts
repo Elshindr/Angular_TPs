@@ -1,14 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  coStatut = false;
+export class HomeComponent implements OnInit, OnDestroy{
+  curUser  !: User;
+  _subUser !: Subscription;
 
-  outConnexionStatutReceiver(connexionValue: boolean){
-    this.coStatut =connexionValue;
+  constructor(private _userService: UserService){
+  }
+
+  isLogged(){
+    return this.curUser.logged;
+  }
+  
+  ngOnInit(): void {
+    this._subUser = this._userService.user$.subscribe(user =>{
+      this.curUser = user;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._subUser.unsubscribe();
   }
 }
