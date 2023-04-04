@@ -1,15 +1,45 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot} from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnexionGuard implements CanActivate {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+  private user!: User;
+  private subUser !: Subscription;
+
+
+  constructor(private router: Router, private _userService: UserService) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    this.subUser = this._userService.user$.subscribe(user => {
+      this.user = user;
+    })
+
+    const { routeConfig } = route;
+    const { path } = routeConfig as Route;
+
+    if (path?.includes('admin') && this.user.name === 'admin') {
+      this.subUser.unsubscribe();
+      return true;
+    }
+
+
+    if (this.user.name != '' && this.user.logged) {
+      this.subUser.unsubscribe();
+      return true;
+    }
+
+    this.subUser.unsubscribe();
+
+    console.log("-------------------------ACCES REFUSE");
+    this.router.navigateByUrl('home'); 
+    return false;
+
   }
-  
+
 }

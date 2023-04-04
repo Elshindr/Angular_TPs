@@ -61,14 +61,25 @@ export class TodoService {
   }
 
   public removeOne(todo:Todo){
+    console.log("== DELETE ");
 
-    this.todo$.next({"id":0,  "done":false, "text":"", selected:false, categorie:"", "idUser":0});
+    const idUser = todo.idUser;
+    let res = false;
+    this._http.delete<Todo>(this._baseUrl + todo.id)
+    .subscribe( {
+      next : () => {
+        res = true;
+        this.todo$.next(new Todo("", false, "", -1));
+        this.getAllTodosByIdUser(idUser);
+      },
+      error: () => {
+        res = false;
+      }
+    });
 
-    return this._http.delete<Todo>(this._baseUrl + todo.id).pipe(
-      tap(() => setTimeout(() => {
-        this.getAllTodosByIdUser(todo.idUser);
-      }, 500))
-    )
+    console.log("res");
+    console.log(res);
+    return res;
   }
 
   public removeAllByIdUser(idUser: number){

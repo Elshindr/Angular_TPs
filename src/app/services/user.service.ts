@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, filter, first, tap } from 'rxjs';
+import { BehaviorSubject,tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.development';
@@ -64,6 +64,7 @@ export class UserService {
   }
 
   public removeOne(id: number) {
+    console.log("== DELETE");
     this.user$.value.logged = false;
     return this._http.delete<User>(this._baseUrl + id)
       .subscribe(() => {

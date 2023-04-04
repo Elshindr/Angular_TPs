@@ -10,7 +10,7 @@ import { TodoService } from 'src/app/services/todo.service';
   styleUrls: ['./tododetail.component.scss']
 })
 export class TododetailComponent {
-  public todo!:Todo;
+  todo!:Todo;
   _sub!: Subscription;
   _subRoute!:Subscription;
   onEdit = false;
@@ -22,15 +22,13 @@ export class TododetailComponent {
 
 
   onRemove(){
-    this._todoService.removeOne(this.todo).subscribe({
-      next : ()=> {
-        this._router.navigateByUrl("liste/1");
-      },
-      error: () => {
-        console.log("Fail DELETE TODO");
-      }
-    })
-
+    const idUser = this.todo.idUser;
+    const res = this._todoService.removeOne(this.todo);
+    if(res){
+      this._router.navigateByUrl("liste/" + idUser);
+    }else{
+      console.log("Fail DELETE TODO");
+    }
   }
 
   
@@ -53,7 +51,7 @@ export class TododetailComponent {
 
     if(!this.onEdit){
       this.todo.text = titre;
-      this.todo.categorie = categorie;
+      this.todo.categorie = categorie.toLowerCase();
 
       this._todoService.updateOne(this.todo).subscribe({
         next: () => {
@@ -62,8 +60,9 @@ export class TododetailComponent {
         error: () => {
           console.log("error update");
         }
-      })
-    }else if (this.onEdit){
+      });
+
+    } else if (this.onEdit){
       this.titleEdit = this.todo.text;
       this.cateEdit = this.todo.categorie;
     }
@@ -71,7 +70,6 @@ export class TododetailComponent {
 
 
   ngOnInit(){
-    let userId = "";
     let todoId = "";
     this._subRoute = this._route.params.subscribe(params => {
       console.log(params) ;

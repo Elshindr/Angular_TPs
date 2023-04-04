@@ -1,23 +1,20 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
-    <a      class="navbar-brand" (click)="onGoHome()"><i class="bi bi-list-task"></i>MyTodos {{currUser.name}}</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    
-    </button>
+    <a  class="navbar-brand" (click)="onGoHome()">
+      <p style="font-size:2rem" class="bi bi-list-stars">MyTodos {{currUser.name}}</p>
+    </a>
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <ul id="navItems" class="navbar-nav mb-2 mb-md-0">
+
+        <li *ngIf="currUser.logged == true" class="nav-item">
+          <a class="nav-link btn" (click)="onGoLstTodos()">Les Todos</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link btn" aria-current="page" (click)="onGoHome()">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link btn" (click)="onGoLstTodos()">Les Todos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="liste/1" >Liste User test (exemple)</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="liste/1/2" >User test : todo 1 (exemple)</a>
-        </li>
+
       </ul>
     </div>
   </div>

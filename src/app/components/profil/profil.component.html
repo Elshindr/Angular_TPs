@@ -11,9 +11,10 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4 mb-lg-3">
         <div class="btn-group">
           <button (click)="onRemove()" type="button" class="btn btn-lg btn-outline-secondary bi bi-trash-fill btnRemove"></button>
-          <button *ngIf="!onEdit" (click)="editUser(editName, editPwd)" type="button" class="btn btn-lg btn-outline-secondary bi bi-pencil-fill btnEdit"></button>
-          <button *ngIf="onEdit"  (click)="editUser(editName, editPwd)" type="button" class="btn btn-lg btn-outline-secondary bi bi-save2-fill btnSave"></button>
-        </div>
+          <button *ngIf="!onEdit" (click)="onEditUser(editName, editPwd)" type="button" class="btn btn-lg btn-outline-secondary bi bi-pencil-fill btnEdit"></button>
+          <button *ngIf="onEdit"  (click)="onEditUser(editName, editPwd)" type="button" class="btn btn-lg btn-outline-secondary bi bi-save2-fill btnSave"></button>
+          <button (click)="onLogOut()" type="button" class="btn btn-lg btn-outline-secondary bi bi-moon-stars-fill btnLogOut"></button>
+
       </div>
     </div>
   </div>

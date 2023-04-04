@@ -6,14 +6,9 @@
       "pwd": "test"
     },
     {
-      "id": 1,
       "name": "tester",
-      "pwd": "tester"
-    },
-    {
-      "name": "jojo",
-      "pwd": "aze",
-      "id": 3
+      "pwd": "tester",
+      "id": 1
     },
     {
       "name": "rt",
@@ -21,9 +16,14 @@
       "id": 4
     },
     {
+      "name": "test",
+      "pwd": "test",
+      "id": 6
+    },
+    {
       "name": "erer",
       "pwd": "erer",
-      "id": 5
+      "id": 7
     }
   ],
   "todos": [
@@ -54,22 +54,22 @@
     {
       "text": "testuser2",
       "done": true,
-      "categorie": "wc",
+      "categorie": "bureau",
       "selected": false,
       "id": 6,
       "idUser": 2
     },
     {
-      "text": "allrez",
-      "done": "",
-      "categorie": "rerzrez",
+      "text": "Editer une todo",
+      "done": true,
+      "categorie": "Bureau",
       "idUser": 2,
       "selected": false,
       "id": 7
     },
     {
       "text": "ajouter",
-      "done": true,
+      "done": false,
       "categorie": "pouet",
       "idUser": 1,
       "selected": false,
@@ -85,19 +85,11 @@
     },
     {
       "text": "er",
-      "done": false,
+      "done": true,
       "categorie": "er",
       "idUser": 1,
       "selected": false,
       "id": 10
-    },
-    {
-      "text": "TA first todo",
-      "done": true,
-      "categorie": "toto",
-      "idUser": 5,
-      "selected": false,
-      "id": 11
     }
   ]
 }

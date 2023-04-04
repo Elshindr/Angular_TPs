@@ -8,11 +8,11 @@
 }
 
 .btnEdit{
-  color:rgb(11, 116, 207);
+  color: #6610f2;
 }
 .btnEdit:hover{
   color:#fff;
-  background-color: rgb(11, 116, 207);
+  background-color: #6610f2;
 }
 
 .btnRemove{
@@ -21,4 +21,12 @@
 .btnRemove:hover{
   color:#fff;
   background-color: rgb(207, 37, 11);
+}
+
+.btnLogOut{
+  color:#6610f2;
+}
+.btnLogOut:hover{
+  color:#fff;
+  color:#6610f2;
 }

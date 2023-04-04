@@ -46,15 +46,17 @@ export class ConnexionComponent implements OnInit, OnDestroy {
         this._userService.getOneByName(user.name, user.pwd);
       }
 
-      if (this.curUser.logged) {
-        this.error = "";
-        setTimeout(() => {
+      setTimeout(() => {
+        if (this.curUser.logged) {
+          this.error = "";
           this.curUser.logged = true;
-          this._router.navigateByUrl('home/' + this.curUser.id);
-        }, 3000);
-      } else {
-        this.error = "Identifiant non trouvé";
-      }
+
+          this._router.navigateByUrl("home/" + this.curUser.id);
+        } else {
+          this.error = "Identifiant non trouvé";
+        }
+      }, 1000);
+
     }
   }
 
