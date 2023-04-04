@@ -14,7 +14,6 @@
         <li class="nav-item" >
           <a class="nav-link" id="ex1-tab-2" [ngClass]="{'active': action == 1}"(click)="onChangeConnect(1)">Se Connecter</a>
         </li>
-        <p *ngIf="error!=''">{{error | titlecase}}</p>
       </ul>
       <!-- Tabs navs -->
 
@@ -27,7 +26,7 @@
           <input type="password" class="form-control" id="pwdInput" name="pwdInput" placeholder="Password" required ngModel>
           <label for="pwdInput">Mdp</label>
         <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div></div>
-
+          <p class="text-danger" *ngIf="error!=''">{{error | titlecase}}</p>
           <button *ngIf="action == 0" class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!coForm.valid">Créer un compte</button>
           <button *ngIf="action == 1"  class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!coForm.valid">Se connecter</button>
           <hr class="my-4">

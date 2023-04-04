@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy{
   }
 
   isLogged(){
-    return this.curUser.logged;
+    return this._userService.user$.value.logged;
   }
   
   ngOnInit(): void {

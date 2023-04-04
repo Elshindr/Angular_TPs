@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Todo } from "src/app/models/todo";
 import { TodoService } from "src/app/services/todo.service";
-import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 
@@ -15,34 +14,30 @@ import { User } from 'src/app/models/user';
 
 export class TodolstComponent implements OnInit, OnDestroy {
   lstTodos: Todo[] = [];
-  lstTodosDone: Todo[]=[];
-  lstTodosCurr: Todo[]=[];
-  curUser!: User; 
+  lstTodosDone: Todo[] = [];
+  lstTodosCurr: Todo[] = [];
+  curUser!: User;
 
   lstCategories: string[] = [];
-  error:string = "";
-  
+  error: string = "";
+
   private _subTodo!: Subscription;
   private _subUser!: Subscription;
-  private _subRoute!: Subscription;
 
-  constructor(private _userService: UserService, private _todoService: TodoService, private _router: Router, private _route: ActivatedRoute) {
+  constructor(private _userService: UserService, private _todoService: TodoService) {
   }
 
 
   onSelectCategorie(categorie: string) {
 
-    this._subTodo = this._todoService.lstTodos$.subscribe(
+    this._todoService.lstTodos$.subscribe(
       todosDatas => {
         this.lstTodos = todosDatas;
       }
     );
 
-    console.log(this.lstCategories)
-    if(categorie != "All"){
-      console.log("not all")
+    if (categorie != "All") {
       this.lstTodos = this.lstTodos.filter(todo => todo.categorie == categorie);
-      
     }
     this.setLstsTodos();
   }
@@ -64,6 +59,7 @@ export class TodolstComponent implements OnInit, OnDestroy {
   onSubmitAddTodo(form: NgForm) {
     if (form.valid) {
       const todo = new Todo(form.value.text, form.value.done, form.value.categorie.toLowerCase(), this.curUser.id);
+
       this._todoService.addOne(todo).subscribe({
         next: (nwTodo: Todo) => {
           this.setLstCategories();
@@ -74,28 +70,29 @@ export class TodolstComponent implements OnInit, OnDestroy {
           console.log("FAIL CREATION TODO");
         }
       });
+
     }
   }
 
 
-  setLstCategories(){
-    this.lstTodos.forEach( todo =>{
-      if(!this.lstCategories.includes(todo.categorie)){
+  setLstCategories() {
+    this.lstTodos.forEach(todo => {
+      if (!this.lstCategories.includes(todo.categorie)) {
         this.lstCategories.push(todo.categorie);
       }
     });
   }
 
 
-  setLstsTodos(){
+  setLstsTodos() {
     this.lstTodosCurr = [];
     this.lstTodosDone = [];
 
     this.lstTodos.forEach(elm => {
-      
-      if(elm.done){
+
+      if (elm.done) {
         this.lstTodosDone.push(elm);
-      }else if (!elm.done){
+      } else if (!elm.done) {
         this.lstTodosCurr.push(elm);
       }
     });
@@ -108,20 +105,20 @@ export class TodolstComponent implements OnInit, OnDestroy {
     this._subUser = this._userService.user$.subscribe(
       user => {
         this.curUser = user;
-    });
-  
-    if(this.curUser.id != undefined){
+      });
+
+    if (this.curUser.id != undefined) {
       this._subTodo = this._todoService.lstTodos$.subscribe(
         todos => {
           setTimeout(() => {
-                this.lstTodos = todos;
-                this.setLstCategories();
-                this.setLstsTodos();
-              
+            this.lstTodos = todos;
+            this.setLstCategories();
+            this.setLstsTodos();
+
           }, 1000);
         }
       );
-    } else{
+    } else {
       console.log("fail chargement");
 
       this._todoService.getAllTodosByIdUser(this.curUser.id);
@@ -129,10 +126,10 @@ export class TodolstComponent implements OnInit, OnDestroy {
       this._subTodo = this._todoService.lstTodos$.subscribe(
         todos => {
           setTimeout(() => {
-                this.lstTodos = todos;
-                this.setLstCategories();
-                this.setLstsTodos();
-              
+            this.lstTodos = todos;
+            this.setLstCategories();
+            this.setLstsTodos();
+
           }, 3000);
         }
       );
@@ -142,6 +139,5 @@ export class TodolstComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._subTodo.unsubscribe();
     this._subUser.unsubscribe();
-   // this._subRoute.unsubscribe();
   }
 }

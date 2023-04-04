@@ -13,7 +13,7 @@ import { TodoService } from 'src/app/services/todo.service';
 export class ProfilComponent implements OnInit, OnDestroy{
   _subUser !: Subscription;
   curUser !: User;
-  lstUser !: User[];
+
   onEdit = false;
   editName = "";
   editPwd  = "";
@@ -33,13 +33,15 @@ export class ProfilComponent implements OnInit, OnDestroy{
 
   editUser(name:string, pwd:string) {
     this.onEdit = !this.onEdit;
-
+    console.log(this.curUser);
     if(!this.onEdit){
+      console.log("onsave");
       this.curUser.name = name;
       this.curUser.pwd = pwd;
-
+      console.log(this.curUser);
       this._userService.updateOne(this.curUser).subscribe({
-        next: () => {
+        next: (user) => {
+          this.curUser = user;
           console.log("ok update user");
         },
         error: () => {
@@ -47,7 +49,9 @@ export class ProfilComponent implements OnInit, OnDestroy{
         }
       });
       
-    }else if (this.onEdit){
+    } else if (this.onEdit){
+      console.log("onEdit");
+      console.log(this.curUser);
       this.editName = this.curUser.name;
       this.editPwd = this.curUser.pwd;
     }
@@ -57,7 +61,6 @@ export class ProfilComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this._subUser = this._userService.user$.subscribe(
         user => {
-       // this.lstUser = lstUser;
         this.curUser = user;
       }
     );

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, first, tap } from 'rxjs';
+import { BehaviorSubject, filter, first, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.development';
@@ -10,18 +10,12 @@ import { environment } from 'src/environments/environment.development';
 export class UserService {
 
   private _baseUrl = environment.urlApi + "/users/";
-  //public lstUsers$ = new BehaviorSubject<User>(null);
   public user$ = new BehaviorSubject<User>(new User('', ''));
 
   constructor(private _http: HttpClient) {
     
   }
 
-  public getOneById(id: number) {
-    this._http.get<User>(this._baseUrl + '/' + id).subscribe(user => {
-      this.user$.next(user);
-    });
-  }
 
   public getOneByName(name: string, pwd: string) {
     console.log("== GetONEbyName User");
@@ -29,15 +23,21 @@ export class UserService {
     params = params.append('name', name);
     params = params.append('pwd', pwd);
 
-    this._http.get<User[]>(this._baseUrl, { params: params }).pipe(first()).subscribe({
-      next: (user: User[]) => {
-        console.log("getOneByName :: user::");
-        console.log(user);
-        this.user$.next(user[0]);
-      },
-      error: () => {
-        // error = "USER NOT FOUND";
-        console.log("USER NOT FOUND");
+    this._http.get<User[]>(this._baseUrl, { params: params }).subscribe({
+
+      next: (users: User[]) => {
+        if(users[0] == undefined || users.length == 0){
+          console.log("non trouve undefined")
+          console.log(users[0])
+          console.log(users);
+          this.user$.value.logged = false;
+
+        } else {
+          console.log("trouve")
+          console.log(users);
+          this.user$.next(users[0]);
+          users[0].logged = true;
+        }
       }
     });
   }

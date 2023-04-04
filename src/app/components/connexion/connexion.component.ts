@@ -1,5 +1,5 @@
 import { UserService } from './../../services/user.service';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user';
@@ -14,9 +14,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
   private _subCurUser !: Subscription;
   action = 1;
   curUser !: User;
-  lstUser !: User[];
-  error : string = "";
-  @Output() outConnexionStatus = new EventEmitter();
+  error: string = "";
 
   constructor(private _userService: UserService, private _router: Router) {
   }
@@ -35,7 +33,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
 
         this._userService.addOne(user).subscribe({
           next: () => {
-              this._userService.getOneByName(user.name, user.pwd);
+            this._userService.getOneByName(user.name, user.pwd);
           },
           error: () => {
             this.error = "FAIL CREATION USER";
@@ -48,18 +46,21 @@ export class ConnexionComponent implements OnInit, OnDestroy {
         this._userService.getOneByName(user.name, user.pwd);
       }
 
-      setTimeout(() => {
-        this.curUser.logged = true;
-        this._router.navigateByUrl('home/' + this.curUser.id);
-      }, 3000);
-
-     
+      if (this.curUser.logged) {
+        this.error = "";
+        setTimeout(() => {
+          this.curUser.logged = true;
+          this._router.navigateByUrl('home/' + this.curUser.id);
+        }, 3000);
+      } else {
+        this.error = "Identifiant non trouvé";
+      }
     }
   }
 
   ngOnInit(): void {
     this._subCurUser = this._userService.user$.subscribe(
-      user => {  
+      user => {
         console.log("=== init Connexion");
         this.curUser = user;
       }

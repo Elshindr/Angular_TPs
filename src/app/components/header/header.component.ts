@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -65,6 +65,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._subUser = this._userService.user$.subscribe(user => {
       setTimeout(() => {this.currUser = user}, 1000)
     });
+
+    if(this.currUser == undefined){
+      this.currUser = new User("","");
+    }
   }
 
 
