@@ -66,7 +66,7 @@
           </label>
           <div *ngIf="error != ''" id="addFormError" class="alert alert-danger" role="alert">{{error | titlecase }}</div>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Ajouter!</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!addForm.valid">Ajouter!</button>
         
 
       </form>

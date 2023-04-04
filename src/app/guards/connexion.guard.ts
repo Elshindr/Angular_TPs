@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
 export class ConnexionGuard implements CanActivate {
   private user!: User;
   private subUser !: Subscription;
-
+  private subRoute !: Subscription;
 
   constructor(private router: Router, private _userService: UserService) { }
 
@@ -20,6 +20,7 @@ export class ConnexionGuard implements CanActivate {
       this.user = user;
     })
 
+    const idUserPath = route.params['idUser'];
     const { routeConfig } = route;
     const { path } = routeConfig as Route;
 
@@ -28,16 +29,20 @@ export class ConnexionGuard implements CanActivate {
       return true;
     }
 
-
-    if (this.user.name != '' && this.user.logged) {
+    if (path?.includes('home/:idUser') && this.user.id == idUserPath && this.user.name != '' && this.user.logged) {
       this.subUser.unsubscribe();
       return true;
     }
 
-    this.subUser.unsubscribe();
+    if (path?.includes('liste/:idUser') && this.user.id == idUserPath && this.user.name != '' && this.user.logged) {
+      this.subUser.unsubscribe();
+      return true;
+    }
+
 
     console.log("-------------------------ACCES REFUSE");
-    this.router.navigateByUrl('home'); 
+    this.subUser.unsubscribe();
+    this.router.navigateByUrl('home');
     return false;
 
   }

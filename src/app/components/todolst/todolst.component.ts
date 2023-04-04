@@ -108,19 +108,6 @@ export class TodolstComponent implements OnInit, OnDestroy {
       });
 
     if (this.curUser.id != undefined) {
-      this._subTodo = this._todoService.lstTodos$.subscribe(
-        todos => {
-          setTimeout(() => {
-            this.lstTodos = todos;
-            this.setLstCategories();
-            this.setLstsTodos();
-
-          }, 1000);
-        }
-      );
-    } else {
-      console.log("fail chargement");
-
       this._todoService.getAllTodosByIdUser(this.curUser.id);
 
       this._subTodo = this._todoService.lstTodos$.subscribe(
@@ -130,7 +117,7 @@ export class TodolstComponent implements OnInit, OnDestroy {
             this.setLstCategories();
             this.setLstsTodos();
 
-          }, 3000);
+          }, 1000);
         }
       );
     }

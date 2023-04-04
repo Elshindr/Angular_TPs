@@ -37,7 +37,7 @@
     },
     {
       "text": "se faire un chocolat",
-      "done": true,
+      "done": false,
       "categorie": "pouette",
       "selected": false,
       "id": 3,
@@ -90,6 +90,14 @@
       "idUser": 1,
       "selected": false,
       "id": 10
+    },
+    {
+      "text": "fsdfs",
+      "done": "",
+      "categorie": "fdsf",
+      "idUser": 1,
+      "selected": false,
+      "id": 11
     }
   ]
 }

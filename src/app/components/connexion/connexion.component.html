@@ -5,7 +5,7 @@
       <p class="col-lg-10 fs-4">Créez et organisez vos tâches à l'infini <i class="bi bi-check2-circle"></i></p>
     </div>
     <div class="col-md-10 mx-auto col-lg-5">
-      
+
       <!-- Tabs navs -->
       <ul class="nav nav-tabs mb-3" id="ex1">
         <li class="nav-item">
@@ -28,9 +28,9 @@
         <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div></div>
           <p class="text-danger" *ngIf="error!=''">{{error | titlecase}}</p>
           <button *ngIf="action == 0" class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!coForm.valid">Créer un compte</button>
-          <button *ngIf="action == 1"  class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!coForm.valid">Se connecter</button>
+          <button *ngIf="action == 1"  class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!coForm.valid">Se Connecter</button>
           <hr class="my-4">
-        <small class="text-body-secondary">En cliquant sur Créer un compte, vous acceptez nos conditions de création de todos.</small>
+        <small class="text-body-secondary">En cliquant sur "Créer un compte" ou "Se Connecter", vous acceptez nos conditions de création de todos.</small>
       </form>
     </div>
   </div>
